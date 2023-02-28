@@ -1,0 +1,54 @@
+{
+	"networks": {
+		"emulator": "127.0.0.1:3569",
+		"mainnet": "access.mainnet.nodes.onflow.org:9000",
+		"sandboxnet": "access.sandboxnet.nodes.onflow.org:9000",
+		"testnet": "access.devnet.nodes.onflow.org:9000"
+	},
+	"accounts": {
+		"emulator-account": {
+			"address": "f8d6e0586b0a20c7",
+			"key": "1aa7924d9f9d88da1e0f24f0090e9c3c1cb0e86abedac32c161fe1bb7f7839ba"
+		},
+		"admin-account": {
+			"address": "f8d6e0586b0a20c7",
+			"key": "1aa7924d9f9d88da1e0f24f0090e9c3c1cb0e86abedac32c161fe1bb7f7839ba"
+		}
+	},
+	"deployments": {
+		"testnet": {
+		  "admin-account": ["LotteryX"]
+		}, 
+		"emulator": {
+		  "emulator-account": [
+			"PRNG",
+			"LotteryX"
+		  ]
+		}
+	},
+	"contracts": {
+		"FlowToken": {
+			"source": "./src/flow/cadence/contracts/utility/FlowToken.cdc",
+			"aliases": {
+				"testnet": "7e60df042a9c0868",
+				"emulator": "0ae53cb6e3f42a79"
+			}
+		},
+		"PRNG": {
+			"source": "./src/flow/cadence/contracts/utility/PRNG.cdc",
+			"aliases": {
+				"testnet": "2bf5575475144be3",
+				"emulator": "f8d6e0586b0a20c7"
+			}
+		},
+		"LotteryX": "./src/flow/cadence/contracts/LotteryX.cdc",
+		"FungibleToken": {
+			"source": "./src/flow/cadence/contracts/utility/FungibleToken.cdc",
+			"aliases": {
+			  "testnet": "9a0766d93b6608b7",
+			  "emulator": "ee82856bf20e2aa6"
+			}
+		}
+	
+	}
+}
