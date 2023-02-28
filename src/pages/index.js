@@ -7,7 +7,7 @@ import Image from 'next/image'
 import { useState, useEffect } from "react";
 
 // components
-import List from './components/lotterylist/List';
+import List from '@/pages/components/lotterylist/List';
 
 // Flow Blockchain
 import "../flow/config";
