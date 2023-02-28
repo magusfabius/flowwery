@@ -403,6 +403,17 @@ pub contract LotteryX {
     /// in a LotteryCollection.
     ///
     pub resource interface LotteryCollectionPublic {
+        /// createLottery
+        /// Allows everyone to create and insert Lotteries.
+        ///
+        pub fun createLottery(
+            salePaymentVaultType: Type,
+            maxTickets: UInt64,
+            ticketPrice: UFix64,
+            saleCuts: [SaleCut],
+            fungibleVault: @FungibleToken.Vault,
+            expiry: UInt64
+        ): UInt64
         pub fun getLotteryIDs(): [UInt64]
         pub fun borrowLottery(lotteryID: UInt64): &Lottery{LotteryPublic}?
    }

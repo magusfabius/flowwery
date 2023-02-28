@@ -9,11 +9,25 @@ import "../flow/config";
 import * as fcl from "@onflow/fcl";
 import * as t from "@onflow/types"
 
+/*
+// EMULATOR CONFIG
 fcl.config()
  .put("0xLotteryX", "0xf8d6e0586b0a20c7")
  .put("0xFungibleToken", "0xee82856bf20e2aa6")
  .put("0xFlowToken", "0x0ae53cb6e3f42a79")
  .put("0xFUSDToken", "0xe223d8a629e49c68")
+
+ const addressManager = "0xf8d6e0586b0a20c7"
+ */
+
+//TESTNET CONFIG
+fcl.config()
+.put("0xLotteryX", "0x5f303d043c0b938c")
+.put("0xFungibleToken", "0x9a0766d93b6608b7")
+.put("0xFlowToken", "0x7e60df042a9c0868")
+.put("0xFUSDToken", "0xe223d8a629e49c68")
+
+const addressManager = "0x5f303d043c0b938c"
 
 
 export default function Createlottery() {
@@ -32,7 +46,7 @@ export default function Createlottery() {
 
     const [form, setForm] = useState(
         {
-            paymentType: "flowToken",
+            paymentType: "flow",
             maxTickets: 2,
             ticketPrice: 0.1,
             cutPercentage: 0.1,
@@ -46,10 +60,8 @@ export default function Createlottery() {
         if(form.paymentType == "flow"){
             createLottery(form.ticketPrice, form.maxTickets, form.expiry, form.cutPercentage )
         }else if(form.paymentType == "fusd"){
-            createFusdLottery(form.ticketPrice, form.maxTickets, form.expiry, form.cutPercentage )
+            createFUSDLottery(form.ticketPrice, form.maxTickets, form.expiry, form.cutPercentage )
         }  
-
-        alert("Lottery Created!")
     }
 
     function handleChange(event) {
@@ -77,10 +89,10 @@ export default function Createlottery() {
 
             /// Transaction used to create a lottery with just the creator as the cutReceiver
 
-            transaction(ticketPrice: UFix64, totalTickets: UInt64, expiry: UInt64, managerCutPercentage: UFix64) {
-                
+            transaction(collectionAddress: Address, ticketPrice: UFix64, totalTickets: UInt64, expiry: UInt64, managerCutPercentage: UFix64) {
+    
                 let flowReceiver: Capability<&AnyResource{FungibleToken.Receiver}>
-                let lotterycollection: &LotteryX.LotteryCollection
+                let lotterycollection: &LotteryX.LotteryCollection{LotteryX.LotteryCollectionPublic}
                 var saleCuts: [LotteryX.SaleCut]
             
                 prepare(acct: AuthAccount) {
@@ -100,9 +112,10 @@ export default function Createlottery() {
                         amount: ticketPrice * UFix64(totalTickets) * managerCutPercentage
                     ))
             
-                    self.lotterycollection = acct.borrow<&LotteryX.LotteryCollection>(from: LotteryX.LotteryCollectionStoragePath)
+                    self.lotterycollection = getAccount(collectionAddress).getCapability<&LotteryX.LotteryCollection{LotteryX.LotteryCollectionPublic}>(LotteryX.LotteryCollectionPublicPath)!
+                        .borrow()
                         ?? panic("Missing or mis-typed LotteryX LotteryCollection")
-                }
+                }            
             
                 execute {
                     // Create lottery
@@ -118,6 +131,7 @@ export default function Createlottery() {
             }
         `,
         fcl.args([
+            fcl.arg(addressManager, t.Address), // collectionAddress: Address
             fcl.arg(ticketPrice, t.UFix64), // ticketPrice: UFix64
             fcl.arg(totalTickets, t.UInt64), // totalTickets: UInt64
             fcl.arg(expiry, t.UInt64), // expiry UInt64

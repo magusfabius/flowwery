@@ -96,6 +96,13 @@ flow transactions send src/flow/cadence/transactions/create_simple_lottery.cdc 1
 flow transactions send src/flow/cadence/transactions/purchase_ticket.cdc 0 f8d6e0586b0a20c7      
 ```
 
+Now you've a working local enviroment where you can create your lotteries.
+Let's surf on the testnet with the command:
+```
+flow accounts update-contract LotteryX ./src/flow/cadence/contracts/LotteryX.cdc --network=testnet --signer=testnet-account
+```
+
+
 ### 👨‍💻 Under development ...
 
 - receive an NFT when you purchase the ticket (check contracts/lottery_experimental.cdc)

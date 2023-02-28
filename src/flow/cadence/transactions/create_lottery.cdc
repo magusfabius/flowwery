@@ -4,7 +4,7 @@ import LotteryX from "../contracts/LotteryX.cdc"
 
 /// Transaction used to facilitate the creation of the lottery under the signer's owned lotteryCollection resource.
 
-transaction(ticketPrice: UFix64, totalTickets: UInt64, expiry: UInt64, cutReceiverList: [Address], cutPercentageList: [UFix64], managerCutPercentage: UFix64) {
+transaction(collectionAddress: Address, ticketPrice: UFix64, totalTickets: UInt64, expiry: UInt64, cutReceiverList: [Address], cutPercentageList: [UFix64], managerCutPercentage: UFix64) {
     
     let flowReceiver: Capability<&AnyResource{FungibleToken.Receiver}>
     let lotterycollection: &LotteryX.LotteryCollection
@@ -27,7 +27,7 @@ transaction(ticketPrice: UFix64, totalTickets: UInt64, expiry: UInt64, cutReceiv
             amount: ticketPrice * UFix64(totalTickets) * managerCutPercentage
         ))
 
-        self.lotterycollection = acct.borrow<&LotteryX.LotteryCollection>(from: LotteryX.LotteryCollectionStoragePath)
+        self.lotterycollection = getAccount(collectionAddress).borrow<&LotteryX.LotteryCollection>(from: LotteryX.LotteryCollectionStoragePath)
             ?? panic("Missing or mis-typed LotteryX LotteryCollection")
 
         for index, cutReceiver in cutReceiverList {    

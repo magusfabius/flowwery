@@ -13,13 +13,27 @@ import List from './components/lotterylist/List';
 import "../flow/config";
 import * as fcl from "@onflow/fcl";
 import * as t from "@onflow/types"
+
+/* 
+// EMULATOR CONFIG
 fcl.config()
  .put("0xLotteryX", "0xf8d6e0586b0a20c7")
  .put("0xFungibleToken", "0xee82856bf20e2aa6")
  .put("0xFlowToken", "0x0ae53cb6e3f42a79")
  .put("0xFUSDToken", "0xe223d8a629e49c68")
 
-const addressManager = "0xf8d6e0586b0a20c7"
+ const addressManager = "0xf8d6e0586b0a20c7"
+*/ 
+
+//TESTNET CONFIG
+fcl.config()
+ .put("0xLotteryX", "0x5f303d043c0b938c")
+ .put("0xFungibleToken", "0x9a0766d93b6608b7")
+ .put("0xFlowToken", "0x7e60df042a9c0868")
+ .put("0xFUSDToken", "0xe223d8a629e49c68")
+
+ const addressManager = "0x5f303d043c0b938c"
+
 
 
 export default function Home() {
