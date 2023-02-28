@@ -10,14 +10,16 @@
 			"address": "f8d6e0586b0a20c7",
 			"key": "1aa7924d9f9d88da1e0f24f0090e9c3c1cb0e86abedac32c161fe1bb7f7839ba"
 		},
-		"admin-account": {
-			"address": "f8d6e0586b0a20c7",
-			"key": "1aa7924d9f9d88da1e0f24f0090e9c3c1cb0e86abedac32c161fe1bb7f7839ba"
+		"testnet-account": {
+			"address": "5f303d043c0b938c",
+			"key": "91a7db4812e621754fbd9dff66753c8e841f509287388d7eda2de4c485d16863"
 		}
 	},
 	"deployments": {
 		"testnet": {
-		  "admin-account": ["LotteryX"]
+		  "testnet-account": [
+			"LotteryX"
+		  ]
 		}, 
 		"emulator": {
 		  "emulator-account": [
@@ -30,6 +32,7 @@
 		"FlowToken": {
 			"source": "./src/flow/cadence/contracts/utility/FlowToken.cdc",
 			"aliases": {
+				"mainnet": "1654653399040a61",
 				"testnet": "7e60df042a9c0868",
 				"emulator": "0ae53cb6e3f42a79"
 			}
@@ -37,18 +40,25 @@
 		"PRNG": {
 			"source": "./src/flow/cadence/contracts/utility/PRNG.cdc",
 			"aliases": {
+				"mainnet": "5d60e2a0dfe7a922",
 				"testnet": "2bf5575475144be3",
 				"emulator": "f8d6e0586b0a20c7"
 			}
 		},
-		"LotteryX": "./src/flow/cadence/contracts/LotteryX.cdc",
 		"FungibleToken": {
 			"source": "./src/flow/cadence/contracts/utility/FungibleToken.cdc",
 			"aliases": {
+			  "mainnet": "f233dcee88fe0abe",
 			  "testnet": "9a0766d93b6608b7",
 			  "emulator": "ee82856bf20e2aa6"
 			}
+		},
+		"LotteryX": {
+			"source": "./src/flow/cadence/contracts/LotteryX.cdc",
+			"aliases": {
+				"testnet": "5f303d043c0b938c",
+				"emulator": "f8d6e0586b0a20c7"
+			}
 		}
-	
 	}
 }
