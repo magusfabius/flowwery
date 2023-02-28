@@ -148,23 +148,17 @@ export default function Createlottery() {
 
   /// This transaction creates a FUSD Lottery Type
     const createFUSDLottery = async (ticketPrice, totalTickets, expiry, managerCutPercentage) => {
-    console.log("ticketPrice: ", ticketPrice)
-    console.log("totalTickets: ", totalTickets)
-    console.log("totalTickets: ", expiry)
-    console.log("managerCutPercentage: ", managerCutPercentage)
-
-    const txId = await fcl.send([
+    
+        const txId = await fcl.send([
     fcl.transaction`
         import FUSD from 0xFUSDToken
         import FungibleToken from 0xFungibleToken
         import LotteryX from 0xLotteryX
         
-        /// Transaction used to create a lottery with just the creator as the cutReceiver
-        
-        transaction(ticketPrice: UFix64, totalTickets: UInt64, expiry: UInt64, managerCutPercentage: UFix64) {
-            
+        transaction(collectionAddress: Address,ticketPrice: UFix64, totalTickets: UInt64, expiry: UInt64, managerCutPercentage: UFix64) {
+    
             let flowReceiver: Capability<&AnyResource{FungibleToken.Receiver}>
-            let lotterycollection: &LotteryX.LotteryCollection
+            let lotterycollection: &LotteryX.LotteryCollection{LotteryX.LotteryCollectionPublic}
             var saleCuts: [LotteryX.SaleCut]
         
             prepare(acct: AuthAccount) {
@@ -177,16 +171,17 @@ export default function Createlottery() {
                 self.fusdReceiver = acct.getCapability<&{FungibleToken.Receiver}>(/public/fusdTokenReceiver)!
                 assert(self.fusdReceiver.borrow() != nil, message: "Missing or mis-typed FusdToken receiver")
                 
-            
+               
                 // Append the cut for the creator of the lottery.
                 self.saleCuts.append(LotteryX.SaleCut(
                     receiver: self.fusdReceiver,
                     amount: ticketPrice * UFix64(totalTickets) * managerCutPercentage
                 ))
         
-                self.lotterycollection = acct.borrow<&LotteryX.LotteryCollection>(from: LotteryX.LotteryCollectionStoragePath)
-                    ?? panic("Missing or mis-typed LotteryX LotteryCollection")
-            }
+                 self.lotterycollection = getAccount(collectionAddress).getCapability<&LotteryX.LotteryCollection{LotteryX.LotteryCollectionPublic}>(LotteryX.LotteryCollectionPublicPath)!
+                                .borrow()
+                                ?? panic("Missing or mis-typed LotteryX LotteryCollection")
+            }            
         
             execute {
                 // Create lottery
@@ -202,6 +197,7 @@ export default function Createlottery() {
         }
     `,
     fcl.args([
+        fcl.arg(addressManager, t.Address), // collectionAddress: Address
         fcl.arg(ticketPrice, t.UFix64), // ticketPrice: UFix64
         fcl.arg(totalTickets, t.UInt64), // totalTickets: UInt64
         fcl.arg(expiry, t.UInt64), // expiry UInt64

@@ -4,10 +4,10 @@ import LotteryX from "../contracts/LotteryX.cdc"
 
 /// Transaction used to create a lottery with just the creator as the cutReceiver
 
-transaction(ticketPrice: UFix64, totalTickets: UInt64, expiry: UInt64, managerCutPercentage: UFix64) {
+transaction(collectionAddress: Address,ticketPrice: UFix64, totalTickets: UInt64, expiry: UInt64, managerCutPercentage: UFix64) {
     
     let flowReceiver: Capability<&AnyResource{FungibleToken.Receiver}>
-    let lotterycollection: &LotteryX.LotteryCollection
+    let lotterycollection: &LotteryX.LotteryCollection{LotteryX.LotteryCollectionPublic}
     var saleCuts: [LotteryX.SaleCut]
 
     prepare(acct: AuthAccount) {
@@ -27,9 +27,10 @@ transaction(ticketPrice: UFix64, totalTickets: UInt64, expiry: UInt64, managerCu
             amount: ticketPrice * UFix64(totalTickets) * managerCutPercentage
         ))
 
-        self.lotterycollection = acct.borrow<&LotteryX.LotteryCollection>(from: LotteryX.LotteryCollectionStoragePath)
-            ?? panic("Missing or mis-typed LotteryX LotteryCollection")
-    }
+         self.lotterycollection = getAccount(collectionAddress).getCapability<&LotteryX.LotteryCollection{LotteryX.LotteryCollectionPublic}>(LotteryX.LotteryCollectionPublicPath)!
+                        .borrow()
+                        ?? panic("Missing or mis-typed LotteryX LotteryCollection")
+                }            
 
     execute {
         // Create lottery

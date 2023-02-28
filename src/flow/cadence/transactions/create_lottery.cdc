@@ -7,7 +7,7 @@ import LotteryX from "../contracts/LotteryX.cdc"
 transaction(collectionAddress: Address, ticketPrice: UFix64, totalTickets: UInt64, expiry: UInt64, cutReceiverList: [Address], cutPercentageList: [UFix64], managerCutPercentage: UFix64) {
     
     let flowReceiver: Capability<&AnyResource{FungibleToken.Receiver}>
-    let lotterycollection: &LotteryX.LotteryCollection
+    let lotterycollection: &LotteryX.LotteryCollection{LotteryX.LotteryCollectionPublic}
     var saleCuts: [LotteryX.SaleCut]
 
     prepare(acct: AuthAccount) {
@@ -27,8 +27,10 @@ transaction(collectionAddress: Address, ticketPrice: UFix64, totalTickets: UInt6
             amount: ticketPrice * UFix64(totalTickets) * managerCutPercentage
         ))
 
-        self.lotterycollection = getAccount(collectionAddress).borrow<&LotteryX.LotteryCollection>(from: LotteryX.LotteryCollectionStoragePath)
-            ?? panic("Missing or mis-typed LotteryX LotteryCollection")
+       self.lotterycollection = getAccount(collectionAddress).getCapability<&LotteryX.LotteryCollection{LotteryX.LotteryCollectionPublic}>(LotteryX.LotteryCollectionPublicPath)!
+                .borrow()
+                ?? panic("Missing or mis-typed LotteryX LotteryCollection")
+        }       
 
         for index, cutReceiver in cutReceiverList {    
             let accountCapability = getAccount(cutReceiver).getCapability<&{FungibleToken.Receiver}>(/public/flowTokenReceiver)
