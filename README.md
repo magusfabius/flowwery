@@ -1,17 +1,17 @@
 # Flowwery 𑁍
-### The flowery decentralized lottery on Flow Blockchain ###
+### Create your own flowery decentralized lottery on Flow Blockchain ###
 
 ## Description
 
 This is a project submitted to the 2023 [Flow Hackaton](https://hackathon.flow.com/) by BlockBidders.
 
-Flowwery 🌺 is a cutting-edge project that aims to revolutionize the lottery industry by offering a decentralized lottery platform on the Flow Blockchain. 
+Flowwery 🌺 aims to revolutionize the lottery industry by offering a decentralized lottery platform on the Flow Blockchain for everyone. 
 
-This platform allows any user to create their own lottery by setting the price, the number of tickets, and adding a prize. 
+This platform allows any user to create their own lottery by setting the number of tickets, the price, the type of currency, the expiration date and the royalties over the prize. 
 One of the mind-blowing thing is that you can create a lottery with just two tickets or with millions of them, you can even set your own cut 🤯 
 Flowwery ensures transparency and fairness by leveraging the decentralized nature of the Flow Blockchain, ensuring that all lottery results are tamper-proof and publicly verifiable.
 
-One of the key advantages of Flowwery is its flexibility in terms of the tokens that can be used to create lotteries. The platform allows users to set up lotteries using any type of fungible token, including the native Flow token.
+One of the key advantages of Flowwery is its flexibility in terms of the tokens that can be used to create lotteries. The platform allows users to set up lotteries using any type of fungible token, including the native Flow token and FUSD.
 
 Another significant benefit of Flowwery is its accessibility. Any user with a Flow Blockchain wallet can easily participate in any lottery or create it, without the need for any additional software or technical knowledge. The platform ensures that lottery results are fair and transparent, providing a level playing field for all participants.
 
@@ -49,10 +49,6 @@ First, run the development server:
 npm install
 
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -67,6 +63,16 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 
 ## Flow Blockchain
+
+### Smart Contract
+The smart contract is called LotteryX and it's already on Testnet.
+We will surf the Mainnet soon ...
+
+| Network         | Contract Address     |
+| --------------- | -------------------- |
+| Testnet         | `0x5f303d043c0b938c` |
+| Mainnet         |         -            |
+
 
 ### Setup
 Install Flow CLI. Follow the [instructions](https://developers.flow.com/tools/flow-cli/install)
@@ -107,7 +113,7 @@ flow accounts update-contract LotteryX ./src/flow/cadence/contracts/LotteryX.cdc
 
 - receive an NFT when you purchase the ticket (check contracts/lottery_experimental.cdc)
 - add an NFT in the prize pool resource
-- see on frontend the tickets I've already purchased
+- see on frontend the tickets I've already purchased and total wins
 
 
 ### 🙏 Inspired by

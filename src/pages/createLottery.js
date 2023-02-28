@@ -319,7 +319,7 @@ export default function Createlottery() {
                     <p> Then a transaction will create a public accessible lottery ... your flowwery 🌸</p>
                 </div>
                 <br></br>
-                <a> Switch to Advanced version </a>
+                <p> Switch to Advanced version </p>
             </div>
 
         </>
