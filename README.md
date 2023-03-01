@@ -117,4 +117,4 @@ flow accounts update-contract LotteryX ./src/flow/cadence/contracts/LotteryX.cdc
 - [PseudoRandomNumberGenerator by justjoolz](https://github.com/justjoolz/PRNG/) - the way we select the winner of the lottery
 - [StoreFrontV2](https://github.com/onflow/nft-storefront) - official implementation by the Flow team
 - [Auction by OxAlchemist](https://github.com/0xAlchemist/flow-auction/blob/master/contracts/Auction.cdc) - Auction Smart Contract
-- [EmeraldCity and Jacob Tucker](https://www.ecdao.org/) 
+- [EmeraldCity and Jacob Tucker](https://www.ecdao.org/) - just a legend
