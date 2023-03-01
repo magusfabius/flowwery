@@ -53,10 +53,11 @@ export default function Home() {
           getLotteryDetails(lotteryID).then(
             details => {
               console.log("Lottery details: ", details)
-              setLotteries([
+              /*setLotteries([
                 ...lotteries,
                 details
-              ])
+              ])*/
+              lotteries.push(details)
             } 
           )
         }

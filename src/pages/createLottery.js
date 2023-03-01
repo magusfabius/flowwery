@@ -220,15 +220,15 @@ export default function Createlottery() {
                 <meta name="description" content="Create a lottery!" />
             </Head>
 
-            <div class="container grid grid-flow-row w-full md:max-w-3xl mx-auto pt-20 text-center">
-                <h1 class="font-bold font-sans break-normal text-gray-900 pt-6 pb-2 text-xl md:text-2xl">🌹🌼🌷 I smell a new Flowwery... 🌻🌸🌺 </h1>
+            <div className="container grid grid-flow-row w-full md:max-w-3xl mx-auto pt-20 text-center">
+                <h1 className="font-bold font-sans break-normal text-gray-900 pt-6 pb-2 text-xl md:text-2xl">🌹🌼🌷 I smell a new Flowwery... 🌻🌸🌺 </h1>
                 <form>
-                    <div class="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
-                        <label htmlFor="tokenSelect" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">TOKEN</label>
+                    <div className="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
+                        <label htmlFor="tokenSelect" className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">TOKEN</label>
                         <select
                             value={selectedOption}
                             id="tokenSelect" 
-                            class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             onChange={e => {
                                 setSelectedOption(e.target.value)
                                 }}>
@@ -238,8 +238,8 @@ export default function Createlottery() {
                         </select>
                     </div>
                     <div>
-                        <div class="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
-                            <label htmlFor="maxTickets" class="text-base font-semibold tracking-wider uppercase mr-7">TICKETS 🎟</label>
+                        <div className="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
+                            <label htmlFor="maxTickets" className="text-base font-semibold tracking-wider uppercase mr-7">TICKETS 🎟</label>
                             <input 
                                 type="number" 
                                 step="any"
@@ -249,12 +249,12 @@ export default function Createlottery() {
                                 value={form.maxTickets}
                                 onChange={handleChange}
                                 placeholder="total tickets" 
-                                class="flex-1 mt-4 appearance-none border border-gray-400 rounded-lg shadow-md p-3 text-gray-600 mr-2 focus:outline-none" />
+                                className="flex-1 mt-4 appearance-none border border-gray-400 rounded-lg shadow-md p-3 text-gray-600 mr-2 focus:outline-none" />
                         </div>
                     </div>
                     <div>
-                        <div class="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
-                            <label htmlFor="ticketPrice" class="text-base font-semibold tracking-wider uppercase mr-7">Ticket Price 💵</label>
+                        <div className="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
+                            <label htmlFor="ticketPrice" className="text-base font-semibold tracking-wider uppercase mr-7">Ticket Price 💵</label>
                             <input 
                                 type="number" 
                                 step="any"
@@ -264,11 +264,11 @@ export default function Createlottery() {
                                 value={form.ticketPrice}
                                 onChange={handleChange}
                                 placeholder="price of the ticket" 
-                                class="flex-1 mt-4 appearance-none border border-gray-400 rounded-lg shadow-md p-3 text-gray-600 mr-2 focus:outline-none" />
+                                className="flex-1 mt-4 appearance-none border border-gray-400 rounded-lg shadow-md p-3 text-gray-600 mr-2 focus:outline-none" />
                         </div>
                     </div>
-                        <div class="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
-                            <label htmlFor="cutPercentage" class="text-base font-semibold tracking-wider uppercase mr-7">Your cut percentage 💎</label>
+                        <div className="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
+                            <label htmlFor="cutPercentage" className="text-base font-semibold tracking-wider uppercase mr-7">Your cut percentage 💎</label>
                             <input 
                                 type="number" 
                                 step="any"
@@ -279,11 +279,11 @@ export default function Createlottery() {
                                 value={form.cutPercentage}
                                 onChange={handleChange}
                                 placeholder="percentage of the prize" 
-                                class="flex-1 mt-4 appearance-none border border-gray-400 rounded-lg shadow-md p-3 text-gray-600 mr-2 focus:outline-none" />
+                                className="flex-1 mt-4 appearance-none border border-gray-400 rounded-lg shadow-md p-3 text-gray-600 mr-2 focus:outline-none" />
                         </div>
                     <div>
-                    <div class="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
-                            <label htmlFor="expiryDate" class="text-base font-semibold tracking-wider uppercase mr-7">Expiry date ⌛️</label>
+                    <div className="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
+                            <label htmlFor="expiryDate" className="text-base font-semibold tracking-wider uppercase mr-7">Expiry date ⌛️</label>
                             <input 
                                 type="number" 
                                 name="expiryDate" 
@@ -293,21 +293,21 @@ export default function Createlottery() {
                                 value={form.expiry}
                                 onChange={handleChange}
                                 placeholder="percentage of the prize" 
-                                class="flex-1 mt-4 appearance-none border border-gray-400 rounded-lg shadow-md p-3 text-gray-600 mr-2 focus:outline-none" />
+                                className="flex-1 mt-4 appearance-none border border-gray-400 rounded-lg shadow-md p-3 text-gray-600 mr-2 focus:outline-none" />
                         </div>
                     </div>
                     <br></br>
                     <br></br>
                     <div>
-                       <button onClick={handleSubmit} class="bg-transparent border border-gray-500 hover:border-green-500 text-base text-gray-500 hover:text-green-500 font-bold py-2 px-4 rounded-lg">Create Lottery</button>
+                       <button onClick={handleSubmit} className="bg-transparent border border-gray-500 hover:border-green-500 text-base text-gray-500 hover:text-green-500 font-bold py-2 px-4 rounded-lg">Create Lottery</button>
                     </div>
                 </form>
 
                 <br></br>
                 <br></br>
 
-                <div class="container grid grid-flow-row w-full md:max-w-3xl mx-auto text-center">
-                    <div class="font-bold font-sans break-normal text-gray-900 pt-6 pb-2 text-xl md:text-xl">
+                <div className="container grid grid-flow-row w-full md:max-w-3xl mx-auto text-center">
+                    <div className="font-bold font-sans break-normal text-gray-900 pt-6 pb-2 text-xl md:text-xl">
                         <h1> ℹ️ What am I doing here?</h1>
                     </div>
                     <p> Here you are creating your own lottery. </p>

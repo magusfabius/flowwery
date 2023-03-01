@@ -1,6 +1,8 @@
 # Flowwery 𑁍
 ### Create your own flowery decentralized lottery on Flow Blockchain ###
 
+Try the [live demo](https://flowwery.vercel.app/)
+
 ## Description
 
 This is a project submitted to the 2023 [Flow Hackaton](https://hackathon.flow.com/) by BlockBidders.
