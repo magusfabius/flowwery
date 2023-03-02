@@ -219,6 +219,17 @@ export default function Createlottery() {
                 <title>Create Flowwery</title>
                 <meta name="description" content="Create a lottery!" />
             </Head>
+     
+            <nav id="header" className="fixed w-full z-10 top-0">
+                <div className="w-full md:max-w-4xl mx-auto flex flex-wrap items-center justify-between mt-0 py-3">
+
+                    <div className="pl-4">
+                        <a className="text-gray-900 text-base no-underline hover:no-underline font-extrabold" href="/">
+                            Flowwery 🌺
+                        </a>
+                    </div>
+                </div>
+             </nav>
 
             <div className="container grid grid-flow-row w-full md:max-w-3xl mx-auto pt-20 text-center">
                 <h1 className="font-bold font-sans break-normal text-gray-900 pt-6 pb-2 text-xl md:text-2xl">🌹🌼🌷 I smell a new Flowwery... 🌻🌸🌺 </h1>
