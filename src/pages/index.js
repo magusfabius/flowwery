@@ -270,7 +270,7 @@ export default function Home() {
 
        
         {lotteries && lotteries.length > 0 ? (
-          <div className="container w-full md:max-w-3xl mx-auto pt-10 text-center">
+          <div className="container w-full md:max-w-4xl mx-auto pt-10 text-center">
             <div>
               <List items={lotteries} buyTicketFunction={purchaseTicket} />
             </div>
