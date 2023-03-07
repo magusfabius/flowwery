@@ -37,6 +37,8 @@ The plan also includes marketing strategies to attract new users and partnership
 
 The team behind Flowwery will focus on continuously improving the platform's user experience, security, and transparency to build a loyal user base and ensure the long-term success of the project. Ultimately, the business plan aims to position Flowwery as the leading decentralized lottery platform on the Flow Blockchain and beyond 🚀.
 
+We are also planning to create a Lottery as a Service type of business plan. We will be able to provide the creation for lotteries 
+
 
 ## Technology
 
@@ -104,12 +106,20 @@ Let's surf on the testnet with the command:
 flow accounts update-contract LotteryX ./src/flow/cadence/contracts/LotteryX.cdc --network=testnet --signer=testnet-account
 ```
 
+### Walletless onboarding
+
+We are integrating the Walletless login usign the [Niftory](https://www.niftory.com/) API.
+
 
 ### 👨‍💻 Under development ...
 
+- use Niftory API for the Walletless onboarding 
 - receive an NFT when you purchase the ticket (check contracts/lottery_experimental.cdc)
+- create a Non Fungible Ticket collection by uploading an image while creating the lottery. The image will be the ticket image and we will use the Niftory API to create the NFT collection
 - add an NFT in the prize pool resource
-- see on frontend the tickets I've already purchased and total wins
+- see on frontend the tickets I've already purchased and total wins (new User page)
+- charity addresses picker: when creating the lottery the owner will be able to pick NGO and entities that will receive a percentage of the lottery. There will be shown a logo-list and the values will be the verified NGO's blockchain addresses
+- improve the style
 
 
 ### 🙏 Inspired by
@@ -118,3 +128,4 @@ flow accounts update-contract LotteryX ./src/flow/cadence/contracts/LotteryX.cdc
 - [StoreFrontV2](https://github.com/onflow/nft-storefront) - official implementation by the Flow team
 - [Auction by OxAlchemist](https://github.com/0xAlchemist/flow-auction/blob/master/contracts/Auction.cdc) - Auction Smart Contract
 - [EmeraldCity and Jacob Tucker](https://www.ecdao.org/) - just a legend
+- [Niftory Sample App](https://github.com/Niftory/niftory-samples/tree/main/walletless-onboarding) - for the Walletless onboarding

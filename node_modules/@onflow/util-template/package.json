@@ -1,0 +1,39 @@
+{
+  "name": "@onflow/util-template",
+  "version": "1.0.4",
+  "description": "Template Literal used for Cadence Interop",
+  "license": "Apache-2.0",
+  "author": "Dapper Labs <dev@dapperlabs.com>",
+  "homepage": "https://onflow.org",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/onflow/flow-js-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/onflow/flow-js-sdk/issues"
+  },
+  "jest": {
+    "transform": {
+      ".js": "jest-esm-transformer"
+    }
+  },
+  "devDependencies": {
+    "@onflow/fcl-bundle": "^1.2.0",
+    "jest": "25.3.0",
+    "jest-esm-transformer": "1.0.0"
+  },
+  "source": "src/template.js",
+  "main": "dist/template.js",
+  "module": "dist/template.module.js",
+  "unpkg": "dist/template.umd.js",
+  "scripts": {
+    "prepublishOnly": "npm test && npm run build",
+    "test": "jest",
+    "build": "fcl-bundle",
+    "test:watch": "jest --watch",
+    "start": "fcl-bundle --watch"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.18.6"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "@onflow/util-invariant",
+  "version": "1.0.3",
+  "description": "Flow JS SDK Util -- Invariant",
+  "license": "Apache-2.0",
+  "author": "Dapper Labs <dev@dapperlabs.com>",
+  "homepage": "https://onflow.org",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/onflow/flow-js-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/onflow/flow-js-sdk/issues"
+  },
+  "jest": {
+    "transform": {
+      ".js": "jest-esm-transformer"
+    }
+  },
+  "devDependencies": {
+    "@onflow/fcl-bundle": "^1.2.0",
+    "@onflow/types": "^1.0.4",
+    "jest": "26.4.2",
+    "jest-esm-transformer": "1.0.0"
+  },
+  "source": "src/index.js",
+  "main": "dist/util-invariant.js",
+  "module": "dist/util-invariant.module.js",
+  "unpkg": "dist/util-invariant.umd.js",
+  "scripts": {
+    "prepublishOnly": "npm test && npm run build",
+    "test": "jest",
+    "build": "fcl-bundle",
+    "test:watch": "jest --watch",
+    "start": "fcl-bundle --watch"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.18.6"
+  }
+}

@@ -5,9 +5,10 @@ import Image from 'next/image'
 
 // react
 import { useState, useEffect } from "react";
+import { useAuthContext } from "../hooks/useAuthContext"
 
 // components
-import List from './components/lotteryList/List';
+import List from '../components/LotteryList';
 
 // Flow Blockchain
 import "../flow/config";
@@ -41,6 +42,8 @@ export default function Home() {
   const [lotteryIDs, setLotteryIDs] = useState([])
   const [lotteries, setLotteries] = useState([])
   const [currentLottery, setLottery] = useState({})
+
+  const { session, signIn, isLoading } = useAuthContext()
 
   useEffect(() => { 
     fcl.currentUser.subscribe(setUser);
@@ -77,6 +80,7 @@ export default function Home() {
   const UnauthenticatedState = () => {
     return (
       <div>
+        <button onClick={() => signIn()} className="bg-transparent border border-gray-500 hover:border-green-500 text-xs text-gray-500 hover:text-green-500 font-bold py-2 px-4 rounded-full">Sign in with Google</button> <span></span>
          <button onClick={fcl.logIn} className="bg-transparent border border-gray-500 hover:border-green-500 text-xs text-gray-500 hover:text-green-500 font-bold py-2 px-4 rounded-full">Login</button> <span></span>
          <button onClick={fcl.signUp} className="bg-transparent border border-gray-500 hover:border-green-500 text-xs text-gray-500 hover:text-green-500 font-bold py-2 px-4 rounded-full">Sign Up</button>
       </div>
@@ -222,46 +226,45 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-      <nav id="header" className="fixed w-full z-10 top-0 bg-gradient-to-b from-white to-transparent">
+      <main className="container mx-auto">
+        <nav id="header" className="fixed w-full z-10 top-0 bg-gradient-to-b from-white to-transparent">
+          <div className="w-full md:max-w-4xl mx-auto flex flex-wrap items-center justify-between mt-0 py-3">
 
-        <div className="w-full md:max-w-4xl mx-auto flex flex-wrap items-center justify-between mt-0 py-3">
+              <div className="pl-4">
+                  <a className="text-gray-900 text-base no-underline hover:no-underline font-extrabold" href="#">
+                      Flowwery 🌺
+                  </a>
+              </div>
 
-            <div className="pl-4">
-                <a className="text-gray-900 text-base no-underline hover:no-underline font-extrabold" href="#">
-                    Flowwery 🌺
-                </a>
-            </div>
+              <div className="block lg:hidden pr-4">
+                  <button id="nav-toggle" className="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-900 hover:border-green-500 appearance-none focus:outline-none">
+                      <svg className="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                          <title>Menu</title>
+                          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+                      </svg>
+                  </button>
+              </div>
 
-            <div className="block lg:hidden pr-4">
-                <button id="nav-toggle" className="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-900 hover:border-green-500 appearance-none focus:outline-none">
-                    <svg className="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <title>Menu</title>
-                        <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-                    </svg>
-                </button>
-            </div>
-
-            <div className="w-full flex-grow lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-gray-100 md:bg-transparent z-20" id="nav-content">
-                <ul className="list-reset lg:flex justify-end flex-1 items-center">
-                    <li className="mr-3">
-                        <div className="inline-block py-2 px-4 text-gray-900 font-bold no-underline" href="#">
-                          <Link href={"/createLottery"}>Create Lottery</Link>
-                        </div>
-                    </li>     
-                    <li className="mr-3">
-                    {user.loggedIn
-                            ? <AuthedState />
-                            : <UnauthenticatedState />
-                        }
-                    </li>
-                </ul>
-            </div>
-        </div>
+              <div className="w-full flex-grow lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-gray-100 md:bg-transparent z-20" id="nav-content">
+                  <ul className="list-reset lg:flex justify-end flex-1 items-center">
+                      <li className="mr-3">
+                          <div className="inline-block py-2 px-4 text-gray-900 font-bold no-underline" href="#">
+                            <Link href={"/createLottery"}>Create Lottery</Link>
+                          </div>
+                      </li>     
+                      <li className="mr-3">
+                      {user.loggedIn
+                              ? <AuthedState />
+                              : <UnauthenticatedState />
+                          }
+                      </li>
+                  </ul>
+              </div>
+          </div>
         </nav>
 
 
-        <div className="container w-full md:max-w-3xl mx-auto pt-20 text-center">
+        <div className="container w-full md:max-w-4xl mx-auto pt-20 text-center">
         <div className="font-sans pb-10">
             <h1 className="font-bold font-sans break-normal text-gray-900 pt-6 pb-2 text-3xl md:text-4xl">🍒 Live Lotteries</h1>
             <p> Buy a ticket of a lottery or create a new one! </p>
@@ -285,12 +288,12 @@ export default function Home() {
         }
        
 
-        <div className="container w-full md:max-w-3xl mx-auto pt-20 ">
+        <div className="container w-full mx-auto pt-20 ">
 
         <div className="w-full px-4 md:px-6 text-xl text-gray-800 leading-normal">
 
             <blockquote className="border-l-4 border-purple-500 italic my-8 pl-8 md:pl-12">
-                Everyone has the freedom to create lotteries, we will take just a small percentage to improve the platform. If you are a developer check the smart contracts here
+                Everyone has the freedom to create lotteries, we will take just a small percentage to improve the platform. If you are a developer check the smart contracts <a href="https://github.com/magusfabius/flowwery">here</a>
             </blockquote>
 
         </div>
@@ -299,7 +302,7 @@ export default function Home() {
 
 
 
-        <div className="container px-4">
+        <div className="container w-full px-4">
             <div className="font-sans bg-gradient-to-b from-purple-200 to-gray-100 rounded-lg shadow-xl p-4 text-center">
                 <h2 className="font-bold break-normal text-xl md:text-3xl">Stay tuned for the next lottery 🔥</h2>
                 <h3 className="font-bold break-normal text-gray-600 text-sm md:text-base">Get the latest updates on new Lotteries and Prizes</h3>
@@ -317,7 +320,7 @@ export default function Home() {
         </div>
 
 
-        <footer className="bg-white border-t border-gray-400 shadow">
+        <footer className="w-full bg-white border-t border-gray-400 shadow">
           <div className="container max-w-4xl mx-auto flex py-8">
 
             <div className="w-full mx-auto flex flex-wrap">
