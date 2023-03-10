@@ -56,7 +56,7 @@ const List = ({ items, buyTicketFunction }) => {
                                     <div className="grid grid-flow-row pr-10 items-center pl-10 justify-center">
                                         <p className="font-semibold font-sans text-xs w-25">Tickets</p>
                                         <div className="text-base  tracking-wider uppercase">
-                                            {lottery.maxTickets} 🎟
+                                           {lottery.ticketSold} / {lottery.maxTickets} 🎟
                                         </div>
                                     </div>
                                 </div>

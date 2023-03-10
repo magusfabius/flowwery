@@ -185,8 +185,13 @@ pub contract LotteryX {
         /// Fetches the details of the lottery.
         pub fun getDetails(): LotteryDetails
 
+        /// getCurrentTicketID
+        /// Expose the getCurrentTicketID funcyion
+        pub fun getCurrentTicketID(): UInt64
+
         /// terminate the lottery if it is expired
         pub fun terminateExpiredLottery()
+
     }
 
 
@@ -222,6 +227,12 @@ pub contract LotteryX {
         /// Get the details of lottery.
         pub fun getDetails(): LotteryDetails {
             return self.details
+        }
+
+        /// getCurrentTicketID
+        /// Get the current ticketID to check how many tickets have been sold
+        pub fun getCurrentTicketID(): UInt64 {
+            return self.currentTicketID
         }
 
 

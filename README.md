@@ -120,6 +120,10 @@ We are integrating the Walletless login usign the [Niftory](https://www.niftory.
 - see on frontend the tickets I've already purchased and total wins (new User page)
 - charity addresses picker: when creating the lottery the owner will be able to pick NGO and entities that will receive a percentage of the lottery. There will be shown a logo-list and the values will be the verified NGO's blockchain addresses
 - improve the style
+- stripe API
+- see how many tickets are left in a lottery ✅
+- android apk with Flutter
+- iOS app 
 
 
 ### 🙏 Inspired by

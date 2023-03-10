@@ -60,7 +60,16 @@ export default function Home() {
                 ...lotteries,
                 details
               ])*/
-              lotteries.push(details)
+              getLotterySoldTickets(lotteryID).then(
+                ticketNumber => {
+                  console.log("Tickets number: ", ticketNumber)
+                  let newDetails = details
+                  newDetails["ticketSold"] = ticketNumber
+
+                  console.log("newDetails: ", newDetails)
+                  lotteries.push(newDetails)
+                } 
+              )
             } 
           )
         }
@@ -122,7 +131,7 @@ export default function Home() {
       cadence:`
       import LotteryX from 0xLotteryX
 
-      // This script returns the details for a listing within a storefront
+      // This script returns the details for a lottery within a lotteryCollection
       // The account parameter is the address that holds the lotteryCollection
       pub fun main(account: Address, lotteryID: UInt64): LotteryX.LotteryDetails {
           let lotteryCollectionRef = getAccount(account)
@@ -146,6 +155,39 @@ export default function Home() {
 
     console.log(response);
     setLottery(response);
+    return response
+  }
+
+  /// Script to get the ID of the last ticket sold, it's also used to get how many tickets ahve been sold
+  const getLotterySoldTickets = async (lotteryID) => {
+    const response = await fcl.query({
+      cadence:`
+      import LotteryX from 0xLotteryX
+
+      
+      // This script returns the last ticket ID
+      // The account parameter is the address that holds the lotteryCollection
+      pub fun main(account: Address, lotteryID: UInt64): UInt64 {
+          let lotteryCollectionRef = getAccount(account)
+              .getCapability<&LotteryX.LotteryCollection{LotteryX.LotteryCollectionPublic}>(
+                  LotteryX.LotteryCollectionPublicPath
+              )
+              .borrow()
+              ?? panic("Could not borrow public lottery collection from address")
+
+          let lottery = lotteryCollectionRef.borrowLottery(lotteryID: lotteryID)
+              ?? panic("No item with that ID")
+          
+          return lottery.getCurrentTicketID()
+      }
+      `,
+      args: (arg, t) => [
+        arg(addressManager, t.Address), // account: Address
+        arg(lotteryID, t.UInt64) // lotteryID: UInt64
+      ],
+  })
+
+    console.log(response);
     return response
   }
 
