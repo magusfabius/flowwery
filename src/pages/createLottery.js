@@ -1,5 +1,6 @@
 // next and style
-import Head from 'next/head'
+import Head from 'next/head';
+import Image from 'next/image';
 
 // react
 import { useState, useEffect } from "react";
@@ -7,7 +8,10 @@ import { useState, useEffect } from "react";
 // Flow Blockchain
 import "../flow/config";
 import * as fcl from "@onflow/fcl";
-import * as t from "@onflow/types"
+import * as t from "@onflow/types";
+
+// Assets
+import petals from "../../public/images/petals.gif";
 
 /*
 // EMULATOR CONFIG
@@ -39,6 +43,10 @@ export default function Createlottery() {
         {
             value: "fusd",
             label: "$FUSD"
+        },
+        {
+            value: "usdc",
+            label: "$USDC"
         }
     ]
     const [selectedOption, setSelectedOption] = useState(fungibleTokenOptions[0].value);
@@ -50,21 +58,36 @@ export default function Createlottery() {
             maxTickets: 2,
             ticketPrice: 0.1,
             cutPercentage: 0.1,
-            expiry: 1893452400 // 2030/01/01 00:00 
+            expiry: new Date().toISOString().split('T')[0]
         }
     );
 
 
     function handleSubmit(event) {
         event.preventDefault(); // Prevent page reloading
+
+        if(form.cutPercentage >= 1 || form.cutPercentage < 0 || form.ticketPrice <= 0 || form.maxTickets <= 1) {
+            console.error("Not allowed!");
+            return;
+        }
+
+        let expiry_timestamp = Date.parse(form.expiry) / 1000;
+
+        if(expiry_timestamp < Date.parse(new Date()) / 1000) {
+            console.error("Not allowed!");
+            return;
+        }
+
+        console.log(expiry_timestamp);
         if(form.paymentType == "flow"){
-            createLottery(form.ticketPrice, form.maxTickets, form.expiry, form.cutPercentage )
+            createLottery(form.ticketPrice, form.maxTickets, expiry_timestamp, form.cutPercentage )
         }else if(form.paymentType == "fusd"){
-            createFUSDLottery(form.ticketPrice, form.maxTickets, form.expiry, form.cutPercentage )
+            createFUSDLottery(form.ticketPrice, form.maxTickets, expiry_timestamp, form.cutPercentage )
         }  
     }
 
     function handleChange(event) {
+
         setForm({
             ...form,
             [event.currentTarget.name]: event.currentTarget.value
@@ -78,7 +101,7 @@ export default function Createlottery() {
     const createLottery = async (ticketPrice, totalTickets, expiry, managerCutPercentage) => {
         console.log("ticketPrice: ", ticketPrice)
         console.log("totalTickets: ", totalTickets)
-        console.log("totalTickets: ", expiry)
+        console.log("expiryDate: ", expiry)
         console.log("managerCutPercentage: ", managerCutPercentage)
 
         const txId = await fcl.send([
@@ -220,11 +243,11 @@ export default function Createlottery() {
                 <meta name="description" content="Create a lottery!" />
             </Head>
      
-            <nav id="header" className="fixed w-full z-10 top-0  bg-gradient-to-b from-white to-transparent">
-                <div className="w-full md:max-w-4xl mx-auto flex flex-wrap items-center justify-between mt-0 py-3">
+            <nav id="header" className="fixed w-full z-10 top-0 bg-gradient-to-b from-white to-transparent">
+                <div className="w-full w-full flex flex-wrap items-center justify-between mt-0 py-3">
 
-                    <div className="pl-4">
-                        <a className="text-gray-900 text-base no-underline hover:no-underline font-extrabold" href="/">
+                    <div className="pl-7">
+                        <a className="text-gray-900 text-xl text-base no-underline hover:no-underline font-extrabold" href="/">
                             Flowwery 🌺
                         </a>
                     </div>
@@ -232,25 +255,35 @@ export default function Createlottery() {
              </nav>
 
             <div className="container grid grid-flow-row w-full md:max-w-3xl mx-auto pt-20 text-center">
-                <h1 className="font-bold font-sans break-normal text-gray-900 pt-6 pb-2 text-xl md:text-2xl">🌹🌼🌷 I smell a new Flowwery... 🌻🌸🌺 </h1>
+                <h1 className="font-bold font-sans break-normal text-gray-900 pt-6 pb-16 text-xl md:text-2xl">🌹🌼🌷 I smell a new Flowwery... 🌻🌸🌺 </h1>
                 <form>
+                    <div className='bg-gray-100 border-gray-300 border pr-8 pl-8 pt-2 pb-2 rounded-xl relative z-0'>
+                        <Image
+                            fill
+                            alt="petals"
+                            src={petals}
+                            style={{objectFit:"cover", zIndex: -1, filter: "blur(2px)"}}
+                        />
+                    <div className='bg-white shadow-md pt-8 pb-8 mb-8 mt-8 rounded-xl z-50'>
                     <div className="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
-                        <label htmlFor="tokenSelect" className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">TOKEN</label>
+                        {/*token changed, see repo*/}
+                        <label htmlFor="tokenSelect" className="block pb-4 text-base font-semibold text-black">TOKEN</label>
                         <select
                             value={selectedOption}
                             id="tokenSelect" 
-                            className="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="block w-full p-2 mb-6 ml-4 text-sm text-purple-900 border border-purple-300 rounded-lg bg-gray-50 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-50 dark:border-purple-600 dark:placeholder-gray-400 dark:text-purlpe dark:focus:ring-purple-500 dark:focus:border-purple-500"
                             onChange={e => {
                                 setSelectedOption(e.target.value)
                                 }}>
                             {fungibleTokenOptions.map(o => (
-                                <option key={o.value} value={o.value}>{o.label}</option>
+                                (o.value != "usdc") ? <option key={o.value} value={o.value}>{o.label}</option>
+                                : <option key={o.value} value={o.value} disabled>{o.label}</option>
                             ))}
                         </select>
                     </div>
                     <div>
                         <div className="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
-                            <label htmlFor="maxTickets" className="text-base font-semibold tracking-wider uppercase mr-7">TICKETS 🎟</label>
+                            <label htmlFor="maxTickets" className="block text-base font-semibold tracking-wider uppercase">TICKETS 🎟</label>
                             <input 
                                 type="number" 
                                 step="any"
@@ -260,12 +293,12 @@ export default function Createlottery() {
                                 value={form.maxTickets}
                                 onChange={handleChange}
                                 placeholder="total tickets" 
-                                className="flex-1 mt-4 appearance-none border border-gray-400 rounded-lg shadow-md p-3 text-gray-600 mr-2 focus:outline-none" />
+                                className="w-full ml-4 mt-4 mb-6 appearance-none border border-purple-400 rounded-lg shadow-md p-3 text-purple-600 mr-2 focus:outline-none" />
                         </div>
                     </div>
                     <div>
                         <div className="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
-                            <label htmlFor="ticketPrice" className="text-base font-semibold tracking-wider uppercase mr-7">Ticket Price 💵</label>
+                            <label htmlFor="ticketPrice" className="text-base font-semibold tracking-wider uppercase">Ticket Price 💵</label>
                             <input 
                                 type="number" 
                                 step="any"
@@ -275,7 +308,7 @@ export default function Createlottery() {
                                 value={form.ticketPrice}
                                 onChange={handleChange}
                                 placeholder="price of the ticket" 
-                                className="flex-1 mt-4 appearance-none border border-gray-400 rounded-lg shadow-md p-3 text-gray-600 mr-2 focus:outline-none" />
+                                className="w-full ml-4 mt-4 mb-6 appearance-none border border-purple-400 rounded-lg shadow-md p-3 text-purple-600 mr-2 focus:outline-none" />
                         </div>
                     </div>
                         <div className="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
@@ -290,34 +323,35 @@ export default function Createlottery() {
                                 value={form.cutPercentage}
                                 onChange={handleChange}
                                 placeholder="percentage of the prize" 
-                                className="flex-1 mt-4 appearance-none border border-gray-400 rounded-lg shadow-md p-3 text-gray-600 mr-2 focus:outline-none" />
+                                className="w-full mt-4 ml-4 mb-6 appearance-none border border-purple-400 rounded-lg shadow-md p-3 text-purple-600 mr-2 focus:outline-none" />
                         </div>
                     <div>
                     <div className="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
-                            <label htmlFor="expiryDate" className="text-base font-semibold tracking-wider uppercase mr-7">Expiry date ⌛️</label>
+                            <label htmlFor="expiry" className="text-base font-semibold tracking-wider uppercase mr-7">Expiry date ⌛️</label>
                             <input 
-                                type="number" 
-                                name="expiryDate" 
-                                id="expiryDate" 
+                                type="date" 
+                                name="expiry" 
+                                id="expiry" 
                                 aria-label='expiryDate'
                                 required
                                 value={form.expiry}
                                 onChange={handleChange}
-                                placeholder="percentage of the prize" 
-                                className="flex-1 mt-4 appearance-none border border-gray-400 rounded-lg shadow-md p-3 text-gray-600 mr-2 focus:outline-none" />
+                                className="w-full mt-4 ml-4 mb-2 appearance-none border border-purple-400 rounded-lg shadow-md p-3 text-purple-600 mr-2 focus:outline-none" />
                         </div>
                     </div>
                     <br></br>
                     <br></br>
                     <div>
-                       <button onClick={handleSubmit} className="bg-transparent border border-gray-500 hover:border-green-500 text-base text-gray-500 hover:text-green-500 font-bold py-2 px-4 rounded-lg">Create Lottery</button>
+                       <button onClick={handleSubmit} className="bg-transparent border border-gray-500 hover:border-purple-500 text-base text-gray-500 hover:text-purple-500 font-bold py-2 px-4 rounded-full">Create Lottery</button>
+                    </div>
+                    </div>
                     </div>
                 </form>
 
                 <br></br>
                 <br></br>
 
-                <div className="container grid grid-flow-row w-full md:max-w-3xl mx-auto text-center">
+                <div className="pt-16 container grid grid-flow-row w-full md:max-w-3xl mx-auto text-center">
                     <div className="font-bold font-sans break-normal text-gray-900 pt-6 pb-2 text-xl md:text-xl">
                         <h1> ℹ️ What am I doing here?</h1>
                     </div>
